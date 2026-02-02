@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise buat Kamu!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fce4ec;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .heart {
+            font-size: 50px;
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #90a4ae;
+            color: white;
+            position: absolute;
+            left: 55%; /* Posisi awal */
+        }
+
+        .hint {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainCard">
+        <div class="heart">❤️</div>
+        <h1>Happy Valentine's Day!</h1>
+        <p>Mau jadi Valentine-ku?</p>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="nextStep()">YES!</button>
+            <button id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+
+        <p class="hint">Psst... coba hover tombol No-nya 😉</p>
+    </div>
+
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            
+            // Hitung posisi acak agar tidak keluar layar
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            // Ubah posisi tombol ke absolute (relatif terhadap body)
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function nextStep() {
+            const card = document.getElementById('mainCard');
+            card.innerHTML = `
+                <div class="heart">💖</div>
+                <h1>YEEAYY! 🥰</h1>
+                <p>Aku tahu kamu pasti mau! See you on Valentine's day, Sayang!</p>
+                <p style="font-size: 0.9rem; margin-top:20px;">I Love You!</p>
+            `;
+            
+            // Tambahkan efek konfeti sederhana
+            for(let i=0; i<50; i++) {
+                createHeart();
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '-20px';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.zIndex = '1000';
+            heart.style.transition = 'transform 3s linear, top 3s linear';
+            
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.style.top = '100vh';
+                heart.style.transform = `translateX(${Math.random() * 100 - 50}px) rotate(${Math.random() * 360}deg)`;
+            }, 100);
+
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
